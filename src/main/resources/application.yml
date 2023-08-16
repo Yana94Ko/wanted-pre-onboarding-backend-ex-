@@ -1,0 +1,12 @@
+server:
+  port: 8084
+
+spring:
+  profiles:
+    active: local
+    include:
+      - SECRET
+
+  devtools:
+    livereload:
+      enabled: true # 서버 자동 시작
