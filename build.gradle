@@ -22,6 +22,15 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+    // 과제 수행을 위한 JPA 의존성 추가
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.0.4'
+
+    // 과제 1,2 수행을 위한 Validation 의존성 추가
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // 과제 1의 비밀번호 암호화를 편하게 진행하기 위한 spring security 의존성 추가
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
     // 과제 2 수행 위한 JWT 의존성 추가
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'

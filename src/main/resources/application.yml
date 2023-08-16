@@ -7,6 +7,12 @@ spring:
     include:
       - SECRET
 
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+
   devtools:
     livereload:
       enabled: true # 서버 자동 시작
