@@ -27,7 +27,7 @@ import wanted.preonboarding.backend.member.service.MemberService;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final MemberService memberService;
+    private final MemberDetailService memberDetailService;
     private final JwtUtils jwtUtils;
     private final AuthenticationEntryPoint authenticationEntryPoint;
     private final CustomAccessDeniedHandler accessDeniedHandler;
@@ -60,7 +60,7 @@ public class SecurityConfig {
                                 , jwtUtils),
                         UsernamePasswordAuthenticationFilter.class
                 ).addFilterBefore(
-                        new JwtAuthorizationFilter(memberService, jwtUtils),
+                        new JwtAuthorizationFilter(memberDetailService, jwtUtils),
                         BasicAuthenticationFilter.class
                 )
                 .exceptionHandling((exceptionHandling)->exceptionHandling

@@ -8,6 +8,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import wanted.preonboarding.backend.global.Auditable;
+import wanted.preonboarding.backend.post.entity.Post;
 
 @Getter
 @Builder
@@ -37,6 +39,9 @@ public class Member extends Auditable {
     @Enumerated(value = EnumType.STRING)
     @Builder.Default
     private List<MemberRoles> roles = new ArrayList<>(List.of(MemberRoles.ROLE_USER));
+
+    @OneToMany(mappedBy = "author")
+    private List<Post> posts = new ArrayList<>();
 
     public static Member of (String email, String password) {
         return Member.builder()

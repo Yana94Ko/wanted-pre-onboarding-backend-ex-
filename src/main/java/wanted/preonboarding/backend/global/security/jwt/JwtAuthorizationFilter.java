@@ -15,16 +15,18 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+import wanted.preonboarding.backend.global.security.MemberDetailService;
 import wanted.preonboarding.backend.member.entity.Member;
 import wanted.preonboarding.backend.member.service.MemberService;
 
 @Slf4j
 @RequiredArgsConstructor
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
-    private final MemberService memberService;
+    private final MemberDetailService memberDetailService;
     private final JwtUtils jwtUtils;
 
     @Override
@@ -73,17 +75,12 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         String username = jwtUtils.getUsername(token);
 
         if(username != null){
-            Member member = memberService.getMemberByEmail(username)
-                    .orElseThrow(() -> new UsernameNotFoundException("아이디 \""+username + "\"는 없는 회원입니다"));
-
-            List<GrantedAuthority> authorities = member.getRoles().stream()
-                    .map(role -> new SimpleGrantedAuthority(role.name()))
-                    .collect(Collectors.toList());
+            UserDetails userDetails = memberDetailService.loadUserByUsername(username);
 
             return new UsernamePasswordAuthenticationToken (
-                    member,
-                    null,
-                    authorities
+                    userDetails,
+                    token,
+                    userDetails.getAuthorities()
             );
         }
         return null;
