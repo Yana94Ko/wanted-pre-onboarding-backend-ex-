@@ -1,12 +1,16 @@
 package wanted.preonboarding.backend.member.entity;
 
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,6 +32,11 @@ public class Member extends Auditable {
 
     private String email;
     private String password;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(value = EnumType.STRING)
+    @Builder.Default
+    private List<MemberRoles> roles = new ArrayList<>(List.of(MemberRoles.ROLE_USER));
 
     public static Member of (String email, String password) {
         return Member.builder()

@@ -26,4 +26,5 @@ public class MemberController {
         return new ResponseEntity<>(memberDto.getEmail() + "님, 회원가입에 성공했습니다 \n환영합니다.", HttpStatus.OK);
     }
 
+
 }
