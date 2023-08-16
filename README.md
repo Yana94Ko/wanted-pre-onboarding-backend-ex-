@@ -15,7 +15,7 @@ wanted-pre-onboarding-backend 지원을 위한 레포
 ## API 명세(request/response 포함)
 
 ### 요구사항 체크리스트
- - [ ] 데이터 저장소로는 MySQL 8.0 버전의 관계형데이터베이스를 사용 
+ - [x] 데이터 저장소로는 MySQL 8.0 버전의 관계형데이터베이스를 사용 
  - [ ] API의 정상 동작 여부, 작성된 코드의 품질, Git & Github의 사용 수준 등이 평가 기준이 됩니다.
 
 
