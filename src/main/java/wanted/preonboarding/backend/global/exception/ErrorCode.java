@@ -52,7 +52,8 @@ public enum ErrorCode {
     }
 
     public String getMessage(Throwable e) {
-        return this.getMessage(this.getMessage() + " - " + e.getMessage());
+        return this.getMessage(
+                "%s - %s \n cause :  %s".formatted(this.getMessage(), e.getMessage(), e.getCause()));
     }
     public String getMessage(Throwable e, Long id) {
         return this.getMessage(this.getMessage() + " - " + e.getMessage());
