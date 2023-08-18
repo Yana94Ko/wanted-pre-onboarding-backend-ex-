@@ -17,7 +17,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import wanted.preonboarding.backend.global.Auditable;
 import wanted.preonboarding.backend.post.entity.Post;
 

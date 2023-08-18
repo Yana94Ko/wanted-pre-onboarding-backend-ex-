@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import wanted.preonboarding.backend.post.dto.PostRepuest;
 import wanted.preonboarding.backend.post.dto.PostResponse;
-import wanted.preonboarding.backend.post.entity.Post;
 import wanted.preonboarding.backend.post.service.PostService;
 
 @RestController
