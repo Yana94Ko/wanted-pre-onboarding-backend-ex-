@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wanted.preonboarding.backend.global.exception.customExceptions.MemberNotFoundException;
+import wanted.preonboarding.backend.global.exception.customExceptions.PostNotFoundException;
 import wanted.preonboarding.backend.member.entity.Member;
 import wanted.preonboarding.backend.member.repository.MemberRepo;
 import wanted.preonboarding.backend.post.dto.PostRepuest.Create;
@@ -42,5 +43,11 @@ public class PostService {
                 .collect(Collectors.toList());
 
         return postList;
+    }
+
+    @Transactional(readOnly = true)
+    public PostResponse getPostInfo(Long id){
+        Post post =  postRepo.findById(id).orElseThrow(()-> new PostNotFoundException(id));
+        return PostResponse.of(post);
     }
 }

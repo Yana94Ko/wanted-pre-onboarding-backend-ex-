@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +39,12 @@ public class PostController {
     ){
         List<PostResponse> postList = postService.getPostList(pageNo, pageSize, sortBy);
         return new ResponseEntity<>(postList, HttpStatus.OK);
+    }
+
+    @GetMapping("{id}")
+    ResponseEntity<PostResponse> getPost(@PathVariable Long id){
+        PostResponse post = postService.getPostInfo(id);
+        return new ResponseEntity<>(post, HttpStatus.OK);
     }
 
 }
