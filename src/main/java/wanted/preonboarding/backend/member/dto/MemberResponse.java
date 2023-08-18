@@ -12,7 +12,6 @@ public class MemberResponse {
     private Long id;
 
     private String email;
-    private String password;
 
     private List<MemberRoles> roles;
 
@@ -20,7 +19,6 @@ public class MemberResponse {
         return MemberResponse.builder()
                 .id(member.getId())
                 .email(member.getEmail())
-                .password(member.getPassword())
                 .roles(member.getRoles())
                 .build();
     }
