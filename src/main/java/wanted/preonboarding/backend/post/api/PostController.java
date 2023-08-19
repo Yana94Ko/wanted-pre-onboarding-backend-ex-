@@ -47,4 +47,14 @@ public class PostController {
         return new ResponseEntity<>(post, HttpStatus.OK);
     }
 
+    @PostMapping("{id}")
+    ResponseEntity<PostResponse> updatePost(
+            @PathVariable Long id,
+            @RequestBody PostRepuest.Update postDto,
+            @AuthenticationPrincipal UserDetails userDetails
+    ){
+        PostResponse updatedPost = postService.updatePost(id, postDto, userDetails.getUsername());
+        return new ResponseEntity<>(updatedPost, HttpStatus.OK);
+    }
+
 }

@@ -31,14 +31,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleAccessDeniedException(AccessDeniedException e) {
         ErrorCode errorCode = ErrorCode.ACCESSDENIED_ERROR;
         String errorMessage = String.format(errorCode.getMessage(), e.getMessage());
-        ApiErrorResponse errorResponse = new ApiErrorResponse(false, errorCode.getCode(), errorMessage);
+        ApiErrorResponse errorResponse = new ApiErrorResponse(HttpStatus.FORBIDDEN, false, errorCode.getCode(), errorMessage);
         return new ResponseEntity<>(errorResponse, errorCode.getHttpStatus());
     }
     @ExceptionHandler({InsufficientAuthenticationException.class})
     public ResponseEntity<Object> handleAccessDeniedException(InsufficientAuthenticationException e) {
         ErrorCode errorCode = ErrorCode.INSUFFICIENTAUTHENTICATION_ERROR;
         String errorMessage = String.format(errorCode.getMessage(), e.getMessage());
-        ApiErrorResponse errorResponse = new ApiErrorResponse(false, errorCode.getCode(), errorMessage);
+        ApiErrorResponse errorResponse = new ApiErrorResponse(HttpStatus.UNAUTHORIZED, false, errorCode.getCode(), errorMessage);
         return new ResponseEntity<>(errorResponse, errorCode.getHttpStatus());
     }
 
@@ -46,7 +46,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleSignatureException(SignatureException e) {
         ErrorCode errorCode = ErrorCode.JWT_SIGNATURE_ERROR;
         String errorMessage = String.format(errorCode.getMessage(), e.getMessage());
-        ApiErrorResponse errorResponse = new ApiErrorResponse(false, errorCode.getCode(), errorMessage);
+        ApiErrorResponse errorResponse = new ApiErrorResponse(HttpStatus.UNAUTHORIZED, false, errorCode.getCode(), errorMessage);
         return new ResponseEntity<>(errorResponse, errorCode.getHttpStatus());
     }
 
@@ -54,7 +54,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleMalformedLinkException(MalformedJwtException e) {
         ErrorCode errorCode = ErrorCode.JWT_MALFORMED_ERROR;
         String errorMessage = String.format(errorCode.getMessage(), e.getMessage());
-        ApiErrorResponse errorResponse = new ApiErrorResponse(false, errorCode.getCode(), errorMessage);
+        ApiErrorResponse errorResponse = new ApiErrorResponse(HttpStatus.BAD_REQUEST, false, errorCode.getCode(), errorMessage);
         return new ResponseEntity<>(errorResponse, errorCode.getHttpStatus());
     }
 
@@ -62,7 +62,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleExpiredJwtException(ExpiredJwtException e) {
         ErrorCode errorCode = ErrorCode.JWT_EXPIRED_ERROR;
         String errorMessage = String.format(errorCode.getMessage(), e.getMessage());
-        ApiErrorResponse errorResponse = new ApiErrorResponse(false, errorCode.getCode(), errorMessage);
+        ApiErrorResponse errorResponse = new ApiErrorResponse(HttpStatus.UNAUTHORIZED, false, errorCode.getCode(), errorMessage);
         return new ResponseEntity<>(errorResponse, errorCode.getHttpStatus());
     }
 
@@ -70,7 +70,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleAuthenticationexception(AuthenticationException e) {
         ErrorCode errorCode = ErrorCode.AUTHENTICATION_ERROR;
         String errorMessage = String.format(errorCode.getMessage(), e.getMessage());
-        ApiErrorResponse errorResponse = new ApiErrorResponse(false, errorCode.getCode(), errorMessage);
+        ApiErrorResponse errorResponse = new ApiErrorResponse(HttpStatus.UNAUTHORIZED, false, errorCode.getCode(), errorMessage);
         return new ResponseEntity<>(errorResponse, errorCode.getHttpStatus());
     }
 
@@ -93,7 +93,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<ApiErrorResponse> handleMemberNotFoundException(MemberNotFoundException e, WebRequest request) {
         ErrorCode errorCode = ErrorCode.MEMBER_NOT_FOUND;
         String errorMessage = String.format(errorCode.getMessage(), e.getMemberId()==null ? e.getMemberEmail(): e.getMemberId());
-        ApiErrorResponse errorResponse = new ApiErrorResponse(false, errorCode.getCode(), errorMessage);
+        ApiErrorResponse errorResponse = new ApiErrorResponse(HttpStatus.NOT_FOUND, false, errorCode.getCode(), errorMessage);
         return new ResponseEntity<>(errorResponse, errorCode.getHttpStatus());
     }
     @ExceptionHandler
@@ -124,7 +124,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     private ResponseEntity<Object> handleExceptionInternal(Exception e, ErrorCode errorCode, HttpHeaders headers, HttpStatus status, WebRequest request) {
         return super.handleExceptionInternal(
                 e,
-                ApiErrorResponse.of(false, errorCode.getCode(), errorCode.getMessage(e)),
+                ApiErrorResponse.of(status, false, errorCode.getCode(), errorCode.getMessage(e)),
                 headers,
                 status,
                 request

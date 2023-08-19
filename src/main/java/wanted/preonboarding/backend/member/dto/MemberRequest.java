@@ -17,4 +17,9 @@ public class MemberRequest {
         @Setter
         private String password;
     }
+
+    @Getter
+    public static class idOnly {
+        private Long id;
+    }
 }
