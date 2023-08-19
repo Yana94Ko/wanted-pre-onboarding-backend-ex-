@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,9 +53,18 @@ public class PostController {
             @PathVariable Long id,
             @RequestBody PostRepuest.Update postDto,
             @AuthenticationPrincipal UserDetails userDetails
-    ){
+    ) {
         PostResponse updatedPost = postService.updatePost(id, postDto, userDetails.getUsername());
         return new ResponseEntity<>(updatedPost, HttpStatus.OK);
+    }
+
+    @DeleteMapping("{id}")
+    ResponseEntity<String> deletePost(
+            @PathVariable Long id,
+            @AuthenticationPrincipal UserDetails userDetails
+    ) {
+        postService.deletePost(id, userDetails.getUsername());
+        return new ResponseEntity<>("게시글 삭제 성공", HttpStatus.OK);
     }
 
 }
