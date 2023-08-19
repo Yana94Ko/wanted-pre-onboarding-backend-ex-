@@ -59,14 +59,29 @@ public class PostService {
         Post previousPost = postRepo.findById(id).orElseThrow(()->new PostNotFoundException(id));
         // 현재 로그인된 사용자 불러오기
         Member member = memberRepo.findByEmail(email)
-                .orElseThrow(()-> new MemberNotFoundException(email));
+                .orElseThrow(() -> new MemberNotFoundException(email));
 
         // 수정전 게시글 작성자의 Email과 Auth 처리되어있는 이메일 일치 여부 확인후 수정 진행
-        if(previousPost.getAuthor().getEmail().equals(email)){
+        if (previousPost.getAuthor().getEmail().equals(email)) {
             previousPost.updatePost(Post.of(member, postDto.getTitle(), postDto.getContent()));
-        }else {
+        } else {
             throw new AccessDeniedException("게시글 수정 권한이 없습니다.");
         }
         return PostResponse.of(previousPost);
     }
+
+    @Transactional
+    public void deletePost(Long id, String email) {
+        Post post = postRepo.findById(id).orElseThrow(() -> new PostNotFoundException(id));
+
+        Member member = memberRepo.findByEmail(email)
+                .orElseThrow(() -> new MemberNotFoundException(email));
+
+        if (post.getAuthor().getEmail().equals(email)) {
+            postRepo.delete(post);
+        } else {
+            throw new AccessDeniedException("게시글 삭제 권한이 없습니다.");
+        }
+    }
+
 }
