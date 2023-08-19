@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.util.Optional;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,5 +41,10 @@ public class Post extends Auditable {
                 .title(title)
                 .content(content)
                 .build();
+    }
+
+    public void updatePost(Post currentPost){
+        Optional.ofNullable(currentPost.getTitle()).ifPresent(title -> this.title = title);
+        Optional.ofNullable(currentPost.getContent()).ifPresent(content -> this.content = content);
     }
 }
