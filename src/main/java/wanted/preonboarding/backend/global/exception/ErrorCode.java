@@ -67,7 +67,7 @@ public enum ErrorCode {
 
     @Override
     public String toString() {
-        return String.format("%s (%d)", this.name(), this.getCode());
+        return String.format("%s (%d) %s", this.name(), this.getCode(), this.getHttpStatus());
     }
 
 }
